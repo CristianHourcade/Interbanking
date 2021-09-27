@@ -11,4 +11,8 @@ class Usuario {
     signIn(){
 
     }
+
+    saludar(){
+        this.signIn();
+    }
 }

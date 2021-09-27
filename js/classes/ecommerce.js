@@ -13,6 +13,8 @@ class Ecommerce {
     agregarAlCarrito(producto){
         this.carrito.push(producto);
         console.log(this.carrito);
+        console.log(this.carrito.join("--"))
+        localStorage.carrito = this.carrito.join('*'); // Despues del break ;)
     }
 
     calcularCantidadElementos(){
@@ -28,10 +30,6 @@ class Ecommerce {
         this.carrito.forEach(producto => {
             acumular += producto.price;
         })
-
-        // let resultado = this.carrito.reduce((valorAnterior, valorActual) => {
-        //     return valorAnterior.price + valorActual.price
-        // })
         return acumular;
     }
 
@@ -40,7 +38,9 @@ class Ecommerce {
     }
 
     sacarDelCarrito(){
-
+        const indice = this.carrito.findIndex(producto => producto.id === id); // findIndex no encuentra -> -1
+        this.carrito.splice(indice, 1);
+        localStorage.carrito = this.carrito;
     }
 
     calcularEnvio(){
@@ -48,16 +48,11 @@ class Ecommerce {
     }
 
     procesarPago(carrito, cupon){
-        // function validarTotal(cupon){
-        //     //... es verdad el cupon ...
-        //     return total;
-        //     return 100 * 0.1;
-
-        //     //...
-        // }
-        // const total = validarTotal(cupon);
-
-        // MERCADOPAGO
+        // Realizo la venta
+        
+        this.carrito = [];
+        localStorage.carrito = [];
+        localStorage.clear();
     }
 
 }

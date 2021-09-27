@@ -1,3 +1,13 @@
+class Crypto {
+    constructor(icon, currentPrice, highPrice, lowPrice, volume, cantidadEnCuenta) {
+        this.icon = icon;
+        this.currentPrice = currentPrice;
+        this.highPrice = highPrice;
+        this.lowPrice = lowPrice;
+        this.volume = volume;
+    }
+}
+
 class Wallet {
     constructor() {
         // Cualquier objeto literal se puede crear con una clase
@@ -12,7 +22,6 @@ class Wallet {
     }
 
     transferir(){
-
     }
 
     convertirMonedas(saldoAconsultar, monedaObjetivo) {
