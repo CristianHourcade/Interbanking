@@ -1,24 +1,68 @@
-const miTienda = new Ecommerce();
-// arrancariamos desde 0
+/**
+ * Productos done!
+ * Carrito done!
+ * 
+ * Funcionalidades
+ * 
+ * agregarAlCarrito Done!
+ * SacarDelCarrito
+ * SumarTotal Done!
+ * Contarelementos Done!
+ * 
+ * mostrarLascards Done!
+ */
 
-// if(localStorage.carrito){
-//     miTienda.carrito = localStorage.carrito;
-// }
+const CARRITO = [];
 
-const producto = { id: 1, name: 'toto', price: 999, stock: 10, category: "zapatillas" };
-const producto2 = { id: 2, name: 'toto2', price: 999, stock: 10, category: "zapatillas" };
-const producto3 = { id: 3, name: 'toto3', price: 911111, stock: 10, category: "chanclas" };
+const PRODUCTOS = [
+    {id:1, name:"toto1", price:900},
+    {id:2, name:"toto2", price:978},
+    {id:3, name:"toto3", price:345},
+    {id:4, name:"toto4", price:89123},
+    {id:5, name:"toto5", price:111}
+]
 
-miTienda.agregarAlCarrito(producto);
-miTienda.agregarAlCarrito(producto2);
-miTienda.agregarAlCarrito(producto3);
+mostrarCards();
 
-localStorage.clase = "Interbanking";
+function mostrarCards(){
+    let acumular = ``;
+    PRODUCTOS.forEach(producto => {
+        acumular += `<div>
+            <h1>${producto.name}</h1>
+            <h2>$${producto.price}</h2>
+            <button onclick='agregarAlCarrito(${producto.id})'>Agregar al carrito</button>
+            <button onclick='eliminarDelCarrito(${producto.id})'>Eliminar</button>
+        </div>`
+    });
+    document.getElementById("productos").innerHTML = acumular;
+}
 
-// terminariamos en 3
-const totalPrecioCarrito = miTienda.calcularTotal();
-const cantidadDeElementos = miTienda.calcularCantidadElementos();
+function eliminarDelCarrito(id){
+    const index = CARRITO.findIndex(producto => producto.id === id);
+    if(index !== -1){
+        CARRITO.splice(index,1);
+    }
+    
+     // Total del carrito
+     let total = 0;
+     CARRITO.forEach(producto => {
+         total += producto.price
+     });
+     document.getElementById("total").innerHTML = "$"+total;
+ 
+     document.getElementById("cantidad").innerHTML = `Cantidad: ${CARRITO.length}`
+}
 
-// El filtro
-const nuevoArrayFiltrado = miTienda.carrito.filter(producto => producto.category === "chanclas")
+function agregarAlCarrito(id){
+    const productoAAgregar = PRODUCTOS.find(producto => producto.id === id);
+    CARRITO.push(productoAAgregar);
+    
+    // Total del carrito
+    let total = 0;
+    CARRITO.forEach(producto => {
+        total += producto.price
+    });
+    document.getElementById("total").innerHTML = "$"+total;
 
+    document.getElementById("cantidad").innerHTML = `Cantidad: ${CARRITO.length}`
+}

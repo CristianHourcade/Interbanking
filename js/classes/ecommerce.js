@@ -10,37 +10,44 @@ class Ecommerce {
         this.title = "La toto's web";
     }
 
+    /**
+     * Function para añadir nuevos elementos al carrito
+     * @param {*} producto Elemento a agregar
+     */
     agregarAlCarrito(producto){
         this.carrito.push(producto);
-        console.log(this.carrito);
-        console.log(this.carrito.join("--"))
-        localStorage.carrito = this.carrito.join('*'); // Despues del break ;)
+        localStorage.carrito = JSON.stringify(this.carrito); 
+        this.calcularTotal();
+        this.calcularCantidadElementos();
     }
 
+    /**
+     * 
+     * @returns Devuelve el total del carrito
+     */
     calcularCantidadElementos(){
-        return this.carrito.length;
+        document.getElementById("cantidadCarrito").innerHTML = this.carrito.length;
     }
 
     calcularTotal(){
         let acumular = 0;
-        for(let i = 0; i< this.carrito.length; i++){
-            acumular += this.carrito[i].price;
-        }
-
         this.carrito.forEach(producto => {
             acumular += producto.price;
         })
-        return acumular;
+        document.getElementById("totalCarrito").innerHTML = `$ ${acumular}`
     }
 
     mostrarCards(){
-
     }
 
-    sacarDelCarrito(){
+    /**
+     * Function para borrar productos del carrito
+     * @param {*} id Es la id por la que vamos a buscar un producto
+     */
+    sacarDelCarrito(id){
         const indice = this.carrito.findIndex(producto => producto.id === id); // findIndex no encuentra -> -1
         this.carrito.splice(indice, 1);
-        localStorage.carrito = this.carrito;
+        localStorage.carrito = JSON.stringify(this.carrito);
     }
 
     calcularEnvio(){
@@ -49,9 +56,7 @@ class Ecommerce {
 
     procesarPago(carrito, cupon){
         // Realizo la venta
-        
         this.carrito = [];
-        localStorage.carrito = [];
         localStorage.clear();
     }
 
